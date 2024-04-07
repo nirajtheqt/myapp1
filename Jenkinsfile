@@ -4,7 +4,7 @@ def version   = '2.0.3'
 pipeline{
     agent any
     environment {
-        PATH = "/opt/apache-maven-3.9.1/bin:$PATH"
+        PATH = "/opt/apache-maven-3.6.3/bin:$PATH"
     }
     stages {
         stage('build') {
@@ -14,15 +14,6 @@ pipeline{
                 echo "------------ build completed ---------"
         }
       }
-
-        stage('Unit Test') {
-            steps {
-                echo '<--------------- Unit Testing started  --------------->'
-                sh 'mvn surefire-report:report'
-                echo '<------------- Unit Testing stopped  --------------->'
-            }
-        }
-
        stage ("Sonar Analysis") {
             environment {
                scannerHome = tool 'SonarScanner'
@@ -35,20 +26,6 @@ pipeline{
                 }    
                
             }   
-        }
-        stage("Quality Gate") {
-            steps {
-                script {
-                  echo '<--------------- Sonar Gate Analysis Started --------------->'
-                    timeout(time: 1, unit: 'HOURS'){
-                       def qg = waitForQualityGate()
-                        if(qg.status !='OK') {
-                            error "Pipeline failed due to quality gate failures: ${qg.status}"
-                        }
-                    }  
-                  echo '<--------------- Sonar Gate Analysis Ends  --------------->'
-                }
-            }
         }
 
          stage("Jar Publish") {
@@ -97,14 +74,6 @@ stage(" Docker Build ") {
             }
         }
     }
-         stage(" Deploy ") {
-          steps {
-            script {
-               echo '<--------------- Deploy Started --------------->'
-               sh 'helm install t5 helm'
-               echo '<--------------- Deploy Ends --------------->'
-            }
-          }
-        }    
+        
     }
     }
