@@ -1,4 +1,4 @@
-def registry = 'https://valaxy02.jfrog.io'
+def registry = 'https://niranjan7057.jfrog.io/'
 def imageName = 'valaxy02.jfrog.io/valaxy-docker/ttrend'
 def version   = '2.0.3'
 pipeline{
@@ -31,13 +31,13 @@ pipeline{
         steps {
             script {
                     echo '<--------------- Jar Publish Started --------------->'
-                     def server = Artifactory.newServer url:registry+"/artifactory" ,  credentialsId:"jfrog-access"
+                     def server = Artifactory.newServer url:registry+"/artifactory" ,  credentialsId:"artifact-cred"
                      def properties = "buildid=${env.BUILD_ID},commitid=${GIT_COMMIT}";
                      def uploadSpec = """{
                           "files": [
                             {
                               "pattern": "jarstaging/(*)",
-                              "target": "twittertrend-libs-release-local/{1}",
+                              "target": "myapp-libs-release-local/{1}",
                               "flat": "false",
                               "props" : "${properties}",
                               "exclusions": [ "*.sha1", "*.md5"]
