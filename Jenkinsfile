@@ -73,12 +73,13 @@ stage(" Docker Build ") {
             }
         }
     }
- post {
+ 
+        
+    }
+    post {
       always {
         echo 'Cleanup'
         cleanWs()
         }
-    }
-        
     }
     }
