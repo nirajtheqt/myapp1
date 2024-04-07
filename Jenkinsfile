@@ -1,5 +1,5 @@
 def registry = 'https://niranjan7057.jfrog.io/'
-def imageName = 'valaxy02.jfrog.io/valaxy-docker/ttrend'
+def imageName = 'niranjan7057.jfrog.io/myapp-docker-docker-local/myapp'
 def version   = '2.0.3'
 pipeline{
     agent any
@@ -66,7 +66,8 @@ stage(" Docker Build ") {
         steps {
             script {
                echo '<--------------- Docker Publish Started --------------->'  
-                docker.withRegistry(registry, 'jfrog-access'){
+                docker.withRegistry(registry, 'artifact-cred
+                                    '){
                     app.push()
                 }    
                echo '<--------------- Docker Publish Ended --------------->'  
