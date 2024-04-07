@@ -77,7 +77,7 @@ stage(" Docker Build ") {
             steps {
                 script {
                     echo '<--------------- Docker Run Started --------------->'
-                    docker.image("${imageName}:${version}").run('-p 8080:8080', '-d')
+                    docker.image("${imageName}:${version}").run('-p 8085:8085', '-d')
                     echo '<--------------- Docker Run Ends --------------->'
                 }
             }
