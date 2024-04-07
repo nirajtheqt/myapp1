@@ -14,18 +14,13 @@ pipeline{
                 echo "------------ build completed ---------"
         }
       }
-       stage ("Sonar Analysis") {
-            environment {
-               scannerHome = tool 'SonarScanner'
-            }
-            steps {
-                echo '<--------------- Sonar Analysis started  --------------->'
-                withSonarQubeEnv('SonarQube-Server') {    
-                    sh "${scannerHome}/bin/sonar-scanner"
-                echo '<--------------- Sonar Analysis stopped  --------------->'
-                }    
-               
-            }   
+    stage('SonarQube analysis') {
+    def scannerHome = tool 'sonar-scanner';
+    withSonarQubeEnv('sonarqube-server') { // If you have configured more than one global server connection, you can specify its name
+      sh "${scannerHome}/bin/sonar-scanner"
+    }
+  }
+
         }
 
          stage("Jar Publish") {
